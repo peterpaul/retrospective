@@ -14,7 +14,6 @@ interface RetrospectiveContextValue {
   rateParticipant: (name: string, value: number) => void;
   addFeedback: (kind: FeedbackItem["kind"], text: string) => void;
   removeFeedback: (id: string) => void;
-  recallFeedback: () => void;
   deleteRetrospective: (id: string) => void;
 }
 
@@ -141,15 +140,6 @@ export function RetrospectiveProvider({ children }: { children: ReactNode }) {
 
       removeFeedback: (id) => {
         setActive((a) => (a ? { ...a, feedback: a.feedback.filter((f) => f.id !== id) } : a));
-      },
-
-      recallFeedback: () => {
-        setActive((a) => {
-          if (!a) return a;
-          const last = history[0];
-          const items = last ? last.feedback.map((f) => ({ ...f })) : [];
-          return { ...a, feedback: items };
-        });
       },
 
       deleteRetrospective: (id) => {
