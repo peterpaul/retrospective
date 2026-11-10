@@ -133,7 +133,7 @@ export default function OngoingRetrospective({ id }: { id: string }) {
                   </div>
                 </div>
 
-                <RatingInput value={active.ratings[active.currentName ?? ""] ?? null} onChange={(v) => rateParticipant(active.currentName ?? "", v)} />
+                <RatingInput participantKey={active.currentName ?? ""} value={active.ratings[active.currentName ?? ""] ?? null} onChange={(v) => rateParticipant(active.currentName ?? "", v)} />
 
                 <div className="mt-5 flex justify-center gap-3">
                   <button

@@ -3,17 +3,19 @@ import { useEffect, useState } from "react";
 interface RatingInputProps {
   value: number | null;
   onChange: (value: number) => void;
+  participantKey?: string;
 }
 
 const QUICK_PICKS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export default function RatingInput({ value, onChange }: RatingInputProps) {
+export default function RatingInput({ value, onChange, participantKey }: RatingInputProps) {
   const [draft, setDraft] = useState<string>(value !== null ? String(value) : "");
 
-  // Keep the draft in sync with the applied rating (e.g. when moving to the next participant).
+  // Reset the draft whenever the participant changes (or on mount).
   useEffect(() => {
     setDraft(value !== null ? String(value) : "");
-  }, [value]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [participantKey]);
 
   const parsed = Number.parseInt(draft, 10);
   const display = Number.isNaN(parsed) ? null : parsed;
@@ -22,7 +24,7 @@ export default function RatingInput({ value, onChange }: RatingInputProps) {
     if (display === null) return;
     const clamped = Math.min(10, Math.max(1, display));
     onChange(clamped);
-    setDraft(String(clamped));
+    setDraft(""); // reset the selected answer after it has been applied
   };
 
   return (
