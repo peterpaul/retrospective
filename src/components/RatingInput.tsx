@@ -37,7 +37,7 @@ export default function RatingInput({ value, onChange }: RatingInputProps) {
             display !== null ? "text-chili" : "text-ink/25"
           } disabled:cursor-not-allowed`}
         >
-          {display ?? "–"}
+          {display ?? "?"}
         </button>
         <div className="pb-1 text-center">
           <div className="text-xs font-bold uppercase tracking-widest text-ink/50">
@@ -75,7 +75,7 @@ export default function RatingInput({ value, onChange }: RatingInputProps) {
         step={1}
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
-        placeholder="1"
+        placeholder="?"
         aria-label="Rating from 1 to 10"
         className="mt-4 w-full rounded-2xl border-2 border-cream-deep bg-white px-4 py-2.5 text-center font-display text-2xl font-bold text-ink shadow-sm outline-none transition focus:border-chili"
       />
