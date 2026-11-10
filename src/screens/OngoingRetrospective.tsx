@@ -370,14 +370,20 @@ export default function OngoingRetrospective({ id }: { id: string }) {
             <ul className="mt-4 max-h-72 space-y-2 overflow-y-auto">
               {(lastRetro?.feedback ?? []).map((f) => (
                 <li key={f.id}>
-                  <label className="flex cursor-pointer items-start gap-3 rounded-2xl bg-cream/70 px-4 py-3">
+                  <label className={`flex cursor-pointer items-start gap-3 rounded-2xl px-4 py-3 ${f.kind === "action" ? "bg-mint/15 text-teal-800" : "bg-cream-deep text-ink"}`}>
                     <input
                       type="checkbox"
                       checked={selectedRecallIds.includes(f.id)}
                       onChange={() => toggleRecallItem(f.id)}
                       className="mt-1 h-5 w-5 accent-chili"
                     />
-                    <span className="text-sm font-semibold text-ink">{f.text}</span>
+                    <span className="flex items-start gap-2 text-sm font-semibold">
+                      {f.kind === "action" ? <Lightbulb className="mt-0.5 h-4 w-4 shrink-0" /> : <MessageSquareHeart className="mt-0.5 h-4 w-4 shrink-0" />}
+                      <span className={`rounded-full px-2 py-0.5 font-display text-[10px] font-bold uppercase tracking-wider ${f.kind === "action" ? "bg-mint/30 text-teal-700" : "bg-ink/10 text-ink/70"}`}>
+                        {f.kind === "action" ? "action" : "feedback"}
+                      </span>
+                      {f.text}
+                    </span>
                   </label>
                 </li>
               ))}
