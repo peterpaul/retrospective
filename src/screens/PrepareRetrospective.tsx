@@ -4,9 +4,10 @@ import { useRetrospective } from "../state";
 import { navigate } from "../router";
 
 export default function PrepareRetrospective() {
-  const { pool, startRetrospective } = useRetrospective();
+  const { pool, history, startRetrospective } = useRetrospective();
+  const lastRetro = history[0];
   const [sprintName, setSprintName] = useState("");
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>(() => lastRetro?.participants ?? []);
   const [nameInput, setNameInput] = useState("");
 
   const addFromPool = (name: string) => {
