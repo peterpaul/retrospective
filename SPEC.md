@@ -27,6 +27,7 @@ This repository builds a single-page-application that can be used to guide/fasci
 - After the rating of a participant is applied, the selected answer resets and displays a question mark until a new rating is selected
 - When a retrospective is closed, all participants that gave a rating are added to the participant pool
 - Feedback and action items in the recall feedback pop-up are highlighted the same way as in the retrospective view
+- In the done state of the collect-a-rating card, only the close-and-save action remains; the unsaved view-in-dashboard shortcut is removed
 - When recalling the feedback from a previous retrospective, it is displayed in a pop-up card; items may be selected in that card and are added to the current retrospective outcome upon closure of the card
 
 ## Screens
