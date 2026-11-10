@@ -23,6 +23,7 @@ This repository builds a single-page-application that can be used to guide/fasci
 - During a retrospective, the fascilitator can call back the feedback from the previous retrospective
 - An average rating is shown during the retrospective
 - The fascilitator can close the retrospective
+- At the end of the retrospective, deferred participants get one more chance to provide their rating
 
 ## Screens
 
@@ -44,6 +45,8 @@ This repository builds a single-page-application that can be used to guide/fasci
 - add participants
   - from local storage
   - text input box
+  - pre-filled automatically from the most recent retrospective's participants
+- remove participants from the squad
 - start retrospective
 
 ### Ongoing retrospective
@@ -53,6 +56,10 @@ This repository builds a single-page-application that can be used to guide/fasci
   - text input box
 - collect each participants number
 - collect general/anonymous feedback/action points
+- the ongoing view is arranged in two columns
+  - the first column (wider) holds the collect-a-rating card, then the feedback/action card
+  - the second column holds the sprint retrospective card, then the participants card
+- the participants card lists all participants one per line, shows the rating for those who already entered one, shows the current average, and lists participants in alphabetical order so the collection order is not derivable from the listing
 
 ## Data
 
