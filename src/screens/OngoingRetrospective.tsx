@@ -108,12 +108,6 @@ export default function OngoingRetrospective({ id }: { id: string }) {
                 </p>
                 <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
                   <button
-                    onClick={() => navigate({ name: "dashboard" })}
-                    className="rounded-2xl bg-ink px-6 py-3 font-display font-bold text-cream transition active:scale-95"
-                  >
-                    View in dashboard
-                  </button>
-                  <button
                     onClick={handleClose}
                     className="rounded-2xl bg-chili px-6 py-3 font-display font-bold text-white shadow-lg shadow-chili/40 transition active:scale-95"
                   >
