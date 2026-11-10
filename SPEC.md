@@ -24,6 +24,7 @@ This repository builds a single-page-application that can be used to guide/fasci
 - An average rating is shown during the retrospective
 - The fascilitator can close the retrospective
 - At the end of the retrospective, deferred participants get one more chance to provide their rating
+- When recalling the feedback from a previous retrospective, it is displayed in a pop-up card; items may be selected in that card and are added to the current retrospective outcome upon closure of the card
 
 ## Screens
 
