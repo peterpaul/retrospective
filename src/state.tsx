@@ -71,6 +71,18 @@ export function RetrospectiveProvider({ children }: { children: ReactNode }) {
         };
         setHistory((h) => [snapshot, ...h]);
         setActive(null);
+        // On finalize, remember every user that gave a rating in the participant pool.
+        if (Object.keys(active.ratings).length > 0) {
+          setPool((p) => {
+            const next = [...p];
+            for (const name of Object.keys(active.ratings)) {
+              if (!next.some((n) => n.toLowerCase() === name.toLowerCase())) {
+                next.push(name);
+              }
+            }
+            return next;
+          });
+        }
         return snapshot;
       },
 
