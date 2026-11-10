@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, CheckCircle2, Flag, Lightbulb, MessageSquareHeart, Plus, RotateCcw, Star, Users, X } from "lucide-react";
-import { useRetrospective } from "../state";
+import { useRetrospective, pendingOf } from "../state";
 import { averageRating, formatDateTime } from "../lib";
 import { navigate } from "../router";
 import Avatar from "../components/Avatar";
@@ -29,7 +29,7 @@ export default function OngoingRetrospective({ id }: { id: string }) {
 
   const deferred = new Set(active.deferred);
   const rated = new Set(Object.keys(active.ratings));
-  const pending = active.participants.filter((p) => !rated.has(p) && !deferred.has(p));
+  const pending = pendingOf(active);
   const avg = averageRating(active.ratings);
   const lastRetro = history[0];
   const done = pending.length === 0;

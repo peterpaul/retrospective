@@ -20,7 +20,8 @@ interface RetrospectiveContextValue {
 
 const RetrospectiveContext = createContext<RetrospectiveContextValue | null>(null);
 
-function pendingOf(a: ActiveRetrospective): string[] {
+export function pendingOf(a: ActiveRetrospective): string[] {
+  if (a.finalRound) return a.finalRound;
   const deferred = new Set(a.deferred);
   const rated = new Set(Object.keys(a.ratings));
   return a.participants.filter((p) => !rated.has(p) && !deferred.has(p));
@@ -54,6 +55,7 @@ export function RetrospectiveProvider({ children }: { children: ReactNode }) {
           ratings: {},
           feedback: [],
           currentName: participants.length > 0 ? shuffle(participants)[0] : null,
+          finalRound: null,
         });
         return id;
       },
@@ -91,12 +93,19 @@ export function RetrospectiveProvider({ children }: { children: ReactNode }) {
       deferParticipant: (name) => {
         setActive((a) => {
           if (!a) return a;
-          if (a.deferred.includes(name)) return a;
-          const deferred = [...a.deferred, name];
-          const next =
-            a.currentName === name
-              ? nextPending({ ...a, deferred })
-              : a.currentName;
+          const deferred = a.deferred.includes(name) ? a.deferred : [...a.deferred, name];
+          if (a.finalRound) {
+            const round = a.finalRound.filter((d) => d !== name);
+            const next = round.length > 0 ? shuffle(round)[0] : null;
+            const finalRound = round.length > 0 ? round : null;
+            return {
+              ...a,
+              deferred: finalRound ? deferred : [],
+              finalRound,
+              currentName: next,
+            };
+          }
+          const next = a.currentName === name ? nextPending({ ...a, deferred }) : a.currentName;
           return { ...a, deferred, currentName: next };
         });
       },
@@ -106,8 +115,20 @@ export function RetrospectiveProvider({ children }: { children: ReactNode }) {
           if (!a) return a;
           const ratings = { ...a.ratings, [name]: value };
           const deferred = a.deferred.filter((d) => d !== name);
-          const next = nextPending({ ...a, deferred, ratings });
-          return { ...a, ratings, deferred, currentName: next };
+          const base = { ...a, deferred, ratings };
+          if (a.finalRound) {
+            const round = a.finalRound.filter((d) => d !== name);
+            const next = round.length > 0 ? shuffle(round)[0] : null;
+            const finalRound = round.length > 0 ? round : null;
+            return { ...base, deferred: finalRound ? deferred : [], finalRound, currentName: next };
+          }
+          const next = nextPending(base);
+          if (next === null && deferred.length > 0) {
+            // Deferred participants get one final chance before the retro closes.
+            const round = [...deferred];
+            return { ...base, finalRound: round, currentName: round[0] };
+          }
+          return { ...base, currentName: next };
         });
       },
 

@@ -22,6 +22,7 @@ export interface ActiveRetrospective {
   ratings: Record<string, number>;
   feedback: FeedbackItem[];
   currentName: string | null;
+  finalRound: string[] | null;
 }
 
 export type Route =
