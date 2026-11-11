@@ -69,7 +69,9 @@ export function RetrospectiveProvider({ children }: { children: ReactNode }) {
           ratings: active.ratings,
           feedback: active.feedback,
         };
-        setHistory((h) => [snapshot, ...h]);
+        const nextHistory = [snapshot, ...history];
+        setHistory(nextHistory);
+        storage.saveHistory(nextHistory);
         setActive(null);
         // On finalize, remember every user that gave a rating in the participant pool.
         if (Object.keys(active.ratings).length > 0) {
@@ -89,7 +91,9 @@ export function RetrospectiveProvider({ children }: { children: ReactNode }) {
       addParticipant: (name) => {
         const clean = name.trim();
         if (!clean) return;
-        setPool((p) => (p.some((n) => n.toLowerCase() === clean.toLowerCase()) ? p : [...p, clean]));
+        const nextPool = pool.some((n) => n.toLowerCase() === clean.toLowerCase()) ? pool : [...pool, clean];
+        setPool(nextPool);
+        storage.savePool(nextPool);
         setActive((a) => {
           if (!a) return a;
           if (a.participants.some((p) => p.toLowerCase() === clean.toLowerCase())) return a;
