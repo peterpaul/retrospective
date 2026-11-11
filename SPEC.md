@@ -26,6 +26,7 @@ This repository builds a single-page-application that can be used to guide/fasci
 - At the end of the retrospective, deferred participants get one more chance to provide their rating
 - After the rating of a participant is applied, the selected answer resets and displays a question mark until a new rating is selected
 - When a retrospective is closed, all participants that gave a rating are added to the participant pool
+- When a retrospective is closed, all participants that gave a rating are added to the participant pool and this pool update is persisted in local storage
 - All recorded retrospectives and previous user names are persisted in local storage so they survive browser restarts and development server restarts
 - Feedback and action items in the recall feedback pop-up are highlighted the same way as in the retrospective view
 - In the done state of the collect-a-rating card, only the close-and-save action remains; the unsaved view-in-dashboard shortcut is removed
